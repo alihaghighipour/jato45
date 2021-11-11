@@ -9,8 +9,8 @@ public class DB {
 	//the specific name of the database
 	private final String DB_NAME = "generation";
 	private final String HOST = "jdbc:mysql://localhost:3306/" + DB_NAME;
-	private final String USERNAME = "root";
-	private final String PASSWORD = "******";
+	private final String USERNAME = "app_generation";
+	private final String PASSWORD = "generation_2021";
 	private Connection connessione = null;
 	
 	private Connection connect() {
@@ -45,7 +45,7 @@ public class DB {
 	
 	public Connection getConnection() {
 		if (this.connessione == null) {
-			this.connect();
+			this.connessione = this.connect();
 		}
 		
 		return this.connessione;

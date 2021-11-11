@@ -38,8 +38,16 @@ public class DonoDAOImpl implements DonoDAO {
 
 	@Override
 	public Dono getDono(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(FIND_ONE);
+		this.ps.setInt(1, id);
+		this.rs = this.ps.executeQuery();
+		this.rs.next();
+		
+		Dono dono = new Dono();
+		dono.setId(this.rs.getInt("id"));
+		dono.setDesc(this.rs.getString("descrizione"));
+		return dono;
 	}
 
 	@Override
@@ -52,8 +60,8 @@ public class DonoDAOImpl implements DonoDAO {
 		this.rs = this.ps.executeQuery();
 		while (rs.next()) {
 			Dono dono = new Dono();
-			dono.setId(rs.getInt("id"));
-			dono.setDesc(rs.getString("descrizione"));
+			dono.setId(this.rs.getInt("id"));
+			dono.setDesc(this.rs.getString("descrizione"));
 			
 			doni.add(dono);
 		}

@@ -48,9 +48,9 @@ public class BabboDAOImpl implements BabboDAO {
 		this.rs.next();
 		
 		Babbo babbo = new Babbo();
-		babbo.setId(rs.getInt("id"));
-		babbo.setNome(rs.getString("nome"));
-		babbo.setPassword(rs.getString("password"));
+		babbo.setId(this.rs.getInt("id"));
+		babbo.setNome(this.rs.getString("nome"));
+		babbo.setPassword(this.rs.getString("password"));
 
 		return babbo;
 	}
@@ -65,9 +65,9 @@ public class BabboDAOImpl implements BabboDAO {
 		this.rs = this.ps.executeQuery();
 		while (rs.next()) {
 			Babbo babbo = new Babbo();
-			babbo.setId(rs.getInt("id"));
-			babbo.setNome(rs.getString("nome"));
-			babbo.setPassword(rs.getString("password"));
+			babbo.setId(this.rs.getInt("id"));
+			babbo.setNome(this.rs.getString("nome"));
+			babbo.setPassword(this.rs.getString("password"));
 			
 			babbi.add(babbo);
 		}

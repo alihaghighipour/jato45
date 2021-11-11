@@ -26,7 +26,7 @@ import model.Dono;
 @WebServlet("/api/babbi")
 public class Babbi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private BabboDAO repo;
+    private BabboDAO repoBabbo;
     private DonoDAO repoDono;
     private ConsegnaDAO repoConsegna;
     /**
@@ -34,7 +34,7 @@ public class Babbi extends HttpServlet {
      */
     public Babbi() {
         super();
-        this.repo = new BabboDAOImpl();
+        this.repoBabbo = new BabboDAOImpl();
         this.repoDono = new DonoDAOImpl();
         this.repoConsegna = new ConsegnaDAOImpl();
     }
@@ -45,7 +45,7 @@ public class Babbi extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			ArrayList<Babbo> babbi = this.repo.getBabbi();
+			ArrayList<Babbo> babbi = this.repoBabbo.getBabbi();
 			response.getWriter().append(babbi.toString());
 			
 			response.getWriter().append(this.repoDono.getDoni().toString());
@@ -63,54 +63,47 @@ public class Babbi extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Dono d = new Dono();
-		d.setDesc("ps4");
+		Dono d1 = new Dono();
+		d1.setDesc("ps4");
 		
 		Dono d2 = new Dono();
 		d2.setDesc("switch");
 		
-		Babbo b = new Babbo();
-		b.setNome("babbo1");
-		b.setPassword("password");
+		Babbo b1 = new Babbo();
+		b1.setNome("babbo1");
+		b1.setPassword("password");
 		
 		Babbo b2 = new Babbo();
 		b2.setNome("babbo2");
 		b2.setPassword("password2");
-		
-		Consegna consegna1 = new Consegna();
-		consegna1.setBabbo(b);
-		consegna1.setDono(d);
-		consegna1.setBambino("ali");
-		
-
-		Consegna consegna2 = new Consegna();
-		consegna2.setBabbo(b2);
-		consegna2.setDono(d);
-		consegna2.setBambino("ali");
-
-		
-		Consegna consegna3 = new Consegna();
-		consegna3.setBabbo(b);
-		consegna3.setDono(d2);
-		consegna3.setBambino("pippo");
-
-		Consegna consegna4 = new Consegna();
-		consegna4.setBabbo(b);
-		consegna4.setDono(d);
-		consegna4.setBambino("ali");
 
 		try {
-			this.repo.addBabbo(b);
-			this.repo.addBabbo(b2);
+			this.repoBabbo.addBabbo(b1);
+			this.repoBabbo.addBabbo(b2);
 			
-			
-			this.repoDono.addDono(d);
+			this.repoDono.addDono(d1);
 			this.repoDono.addDono(d2);
+			
+			Consegna consegna1 = new Consegna();
+			consegna1.setBabbo(this.repoBabbo.getBabbo(1));
+			consegna1.setDono(this.repoDono.getDono(1));
+			consegna1.setBambino("ali");
+			
+
+			Consegna consegna2 = new Consegna();
+			consegna2.setBabbo(this.repoBabbo.getBabbo(2));
+			consegna2.setDono(this.repoDono.getDono(1));
+			consegna2.setBambino("marco");
+
+			
+			Consegna consegna3 = new Consegna();
+			consegna3.setBabbo(this.repoBabbo.getBabbo(1));
+			consegna3.setDono(this.repoDono.getDono(2));
+			consegna3.setBambino("pippo");
 			
 			this.repoConsegna.addConsegna(consegna1);
 			this.repoConsegna.addConsegna(consegna2);
 			this.repoConsegna.addConsegna(consegna3);
-			this.repoConsegna.addConsegna(consegna4);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();

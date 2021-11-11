@@ -68,6 +68,8 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 			Dono dono = donoDAO.getDono(rs.getInt("id_dono"));
 			consegna.setDono(dono);
 			
+			consegna.setBambino(rs.getString("bambino"));
+			
 			consegne.add(consegna);
 		}
 		
