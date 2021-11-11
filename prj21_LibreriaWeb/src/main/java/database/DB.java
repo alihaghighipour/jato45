@@ -16,7 +16,7 @@ public class DB {
 		
 		try {
 			try {
-				Class.forName("com.mysql.cj.jdbc.driver");
+				Class.forName("com.mysql.cj.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
