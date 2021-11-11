@@ -10,7 +10,7 @@ public class DB {
 	private final String DB_NAME = "generation";
 	private final String HOST = "jdbc:mysql://localhost:3306/" + DB_NAME;
 	private final String USERNAME = "root";
-	private final String PASSWORD = "thisdbissecure";
+	private final String PASSWORD = "******";
 	private Connection connessione = null;
 	
 	private Connection connect() {
