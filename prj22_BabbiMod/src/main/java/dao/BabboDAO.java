@@ -19,5 +19,4 @@ public interface BabboDAO {
 	Babbo getBabbo(int id) throws SQLException;
 	ArrayList<Babbo> getBabbi() throws SQLException;
 	
-	
 }

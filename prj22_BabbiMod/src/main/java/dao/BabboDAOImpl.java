@@ -28,14 +28,20 @@ public class BabboDAOImpl implements BabboDAO {
 
 	@Override
 	public void updateBabbo(Babbo babbo) throws SQLException {
-		// TODO Auto-generated method stub
-
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(UPDATE);
+		this.ps.setString(1, babbo.getNome());
+		this.ps.setString(2, babbo.getPassword());
+		this.ps.setInt(3, babbo.getId());
+		this.ps.execute();
 	}
 
 	@Override
 	public void deleteBabbo(int id) throws SQLException {
-		// TODO Auto-generated method stub
-
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(DELETE);
+		this.ps.setInt(1, id);
+		this.ps.execute();
 	}
 
 	@Override

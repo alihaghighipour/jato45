@@ -27,13 +27,19 @@ public class DonoDAOImpl implements DonoDAO {
 
 	@Override
 	public void updateDono(Dono dono) throws SQLException {
-
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(UPDATE);
+		this.ps.setString(1, dono.getDesc());
+		this.ps.setInt(2, dono.getId());
+		this.ps.execute();
 	}
 
 	@Override
 	public void deleteDono(int id) throws SQLException {
-		// TODO Auto-generated method stub
-
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(DELETE);
+		this.ps.setInt(1, id);
+		this.ps.execute();
 	}
 
 	@Override

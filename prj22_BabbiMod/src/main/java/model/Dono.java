@@ -16,6 +16,7 @@ public class Dono {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -26,6 +27,5 @@ public class Dono {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+
 }
