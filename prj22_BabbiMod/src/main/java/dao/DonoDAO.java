@@ -10,8 +10,8 @@ public interface DonoDAO {
 	
 	String FIND_ALL = "select * from doni";
 	String FIND_ONE = "select * from doni where id = ?";
-	String INSERT = "insert into doni(descrizione) values(?)";
-	String UPDATE = "update doni set descrizione = ? where id = ?";
+	String INSERT = "insert into doni(descrizione, disponibilita) values(?,?)";
+	String UPDATE = "update doni set descrizione = ?, disponibilita = ?  where id = ?";
 	String DELETE = "delete from doni where id = ?";
 	
 	void addDono(Dono dono) throws SQLException;
@@ -19,6 +19,5 @@ public interface DonoDAO {
 	void deleteDono(int id) throws SQLException;
 	Dono getDono(int id) throws SQLException;
 	ArrayList<Dono> getDoni() throws SQLException;
-	
 	
 }

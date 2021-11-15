@@ -76,7 +76,8 @@ public class Babbi extends HttpServlet {
 		Babbo b2 = new Babbo();
 		b2.setNome("babbo2");
 		b2.setPassword("password2");
-
+		
+		/*
 		try {
 			this.repoBabbo.addBabbo(b1);
 			this.repoBabbo.addBabbo(b2);
@@ -108,7 +109,7 @@ public class Babbi extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		doGet(request, response);
 	}

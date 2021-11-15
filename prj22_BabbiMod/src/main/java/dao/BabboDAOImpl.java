@@ -23,6 +23,8 @@ public class BabboDAOImpl implements BabboDAO {
 		this.ps = this.connection.prepareStatement(INSERT);
 		this.ps.setString(1, babbo.getNome());
 		this.ps.setString(2, babbo.getPassword());
+		this.ps.setString(3, babbo.getMezzoTrasporto());
+		this.ps.setString(4, babbo.getZona());
 		this.ps.execute();
 	}
 
@@ -32,7 +34,9 @@ public class BabboDAOImpl implements BabboDAO {
 		this.ps = this.connection.prepareStatement(UPDATE);
 		this.ps.setString(1, babbo.getNome());
 		this.ps.setString(2, babbo.getPassword());
-		this.ps.setInt(3, babbo.getId());
+		this.ps.setString(3, babbo.getMezzoTrasporto());
+		this.ps.setString(4, babbo.getZona());
+		this.ps.setInt(5, babbo.getId());
 		this.ps.execute();
 	}
 
@@ -57,7 +61,9 @@ public class BabboDAOImpl implements BabboDAO {
 		babbo.setId(this.rs.getInt("id"));
 		babbo.setNome(this.rs.getString("nome"));
 		babbo.setPassword(this.rs.getString("password"));
-
+		babbo.setMezzoTrasporto(this.rs.getString("mezzo_trasporto"));
+		babbo.setZona(this.rs.getString("zona"));
+		
 		return babbo;
 	}
 
@@ -74,6 +80,8 @@ public class BabboDAOImpl implements BabboDAO {
 			babbo.setId(this.rs.getInt("id"));
 			babbo.setNome(this.rs.getString("nome"));
 			babbo.setPassword(this.rs.getString("password"));
+			babbo.setMezzoTrasporto(this.rs.getString("mezzo_trasporto"));
+			babbo.setZona(this.rs.getString("zona"));
 			
 			babbi.add(babbo);
 		}

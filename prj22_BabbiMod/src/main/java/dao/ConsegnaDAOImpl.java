@@ -7,15 +7,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import database.DB;
-import model.Babbo;
+import model.Bambino;
 import model.Consegna;
 import model.Dono;
 
 public class ConsegnaDAOImpl implements ConsegnaDAO {
 
 	DB db = new DB();
+	/*
+	 * verrano utilizatti per interagire con altre tabelle
+	 */
 	DonoDAO donoDAO = new DonoDAOImpl();
-	BabboDAO babboDAO = new BabboDAOImpl();
+	BambinoDAO bambinoDAO = new BambinoDAOImpl();
 	
 	Connection connection;
 	PreparedStatement ps;
@@ -26,28 +29,54 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 		
 		this.connection = this.db.getConnection();
 		this.ps = this.connection.prepareStatement(INSERT);
-		this.ps.setInt(1, consegna.getBabbo().getId());
-		this.ps.setInt(2, consegna.getDono().getId());
-		this.ps.setString(3, consegna.getBambino());
+		this.ps.setInt(1, consegna.getDono().getId());
+		this.ps.setInt(2, consegna.getBambino().getId());
 		this.ps.execute();
 	}
 
 	@Override
 	public void updateConsegna(Consegna consegna) throws SQLException {
-		// TODO Auto-generated method stub
-
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(UPDATE);
+		this.ps.setInt(1, consegna.getDono().getId());
+		this.ps.setInt(2, consegna.getBambino().getId());
+		this.ps.setInt(3, consegna.getId());
+		this.ps.execute();
 	}
 
 	@Override
 	public void deleteConsegna(int id) throws SQLException {
-		// TODO Auto-generated method stub
-
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(DELETE);
+		this.ps.setInt(1, id);
+		this.ps.execute();
 	}
 
 	@Override
 	public Consegna getConsegna(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(FIND_ONE);
+		this.ps.setInt(1, id);
+		this.rs = this.ps.executeQuery();
+		this.rs.next();
+		
+		Consegna consegna = new Consegna(); 
+		consegna.setId(this.rs.getInt("id"));
+		
+		int idDonoTmp = this.rs.getInt("id_dono");
+		int idBambinoTmp = this.rs.getInt("id_bambino");
+
+		Dono dono = new Dono();
+		Bambino bambino = new Bambino();
+		
+		dono = donoDAO.getDono(idDonoTmp);
+		bambino = bambinoDAO.getBambino(idBambinoTmp);
+		
+		consegna.setDono(dono);
+		consegna.setBambino(bambino);
+		
+		
+		return consegna;
 	}
 
 	@Override
@@ -59,16 +88,20 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 		this.ps = this.connection.prepareStatement(FIND_ALL);
 		this.rs = this.ps.executeQuery();
 		while (rs.next()) {
-			Consegna consegna = new Consegna();
-			consegna.setId(rs.getInt("id"));
+			Consegna consegna = new Consegna(); 
+			consegna.setId(this.rs.getInt("id"));
 			
-			Babbo babbo = babboDAO.getBabbo(rs.getInt("id_babbo"));
-			consegna.setBabbo(babbo);
+			int idDonoTmp = this.rs.getInt("id_dono");
+			int idBambinoTmp = this.rs.getInt("id_bambino");
+
+			Dono dono = new Dono();
+			Bambino bambino = new Bambino();
 			
-			Dono dono = donoDAO.getDono(rs.getInt("id_dono"));
+			dono = donoDAO.getDono(idDonoTmp);
+			bambino = bambinoDAO.getBambino(idBambinoTmp);
+			
 			consegna.setDono(dono);
-			
-			consegna.setBambino(rs.getString("bambino"));
+			consegna.setBambino(bambino);
 			
 			consegne.add(consegna);
 		}

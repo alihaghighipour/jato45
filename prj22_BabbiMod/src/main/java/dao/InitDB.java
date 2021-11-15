@@ -17,6 +17,8 @@ public class InitDB {
 				+ "id INT AUTO_INCREMENT,"
 				+ "nome varchar(10),"
 				+ "password varchar(10),"
+				+ "mezzo_trasporto varchar(20),"
+				+ "zona varchar(20),"
 				+ "PRIMARY KEY(id) )";
 		
 		connessione = db.getConnection();
@@ -32,6 +34,7 @@ public class InitDB {
 		String query = "create table if not exists doni("
 				+ "id INT AUTO_INCREMENT,"
 				+ "descrizione varchar(10),"
+				+ "disponibilita INT,"
 				+ "PRIMARY KEY(id) )";
 		
 		connessione = db.getConnection();
@@ -46,9 +49,8 @@ public class InitDB {
 	public static void creaTabellaConsegne() {
 		String query = "create table if not exists consegne("
 				+ "id INT AUTO_INCREMENT,"
-				+ "id_babbo INT,"
 				+ "id_dono INT,"
-				+ "bambino varchar(10),"
+				+ "id_bambino INT,"
 				+ "PRIMARY KEY(id) )";
 		
 		connessione = db.getConnection();
@@ -60,9 +62,44 @@ public class InitDB {
 		}
 	}
 	
+	public static void creaTabellaBambini() {
+		String query = "create table if not exists bambini("
+				+ "id INT AUTO_INCREMENT,"
+				+ "nome varchar(10),"
+				+ "indirizzo varchar(30),"
+				+ "PRIMARY KEY(id) )";
+	
+		connessione = db.getConnection();
+		try {
+			stat = connessione.createStatement();
+			stat.execute(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void creaTabellaSacchi() {
+		String query = "create table if not exists sacchi("
+				+ "nome varchar(20),"
+				+ "id_babbo INT,"
+				+ "id_consegna INT,"
+				+ "PRIMARY KEY(nome,id_babbo,id_consegna) )";
+		
+		connessione = db.getConnection();
+		try {
+			stat = connessione.createStatement();
+			stat.execute(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		creaTabellaBabbi();
 		creaTabellaDoni();
 		creaTabellaConsegne();
+		creaTabellaBambini();
+		creaTabellaSacchi();
 	}
 }

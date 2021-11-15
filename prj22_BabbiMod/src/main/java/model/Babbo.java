@@ -4,6 +4,8 @@ public class Babbo {
 	private int id;
 	private String nome;
 	private String password;
+	private String mezzoTrasporto;
+	private String zona;
 	
 	public int getId() {
 		return id;
@@ -23,6 +25,18 @@ public class Babbo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getMezzoTrasporto() {
+		return mezzoTrasporto;
+	}
+	public void setMezzoTrasporto(String mezzoTrasporto) {
+		this.mezzoTrasporto = mezzoTrasporto;
+	}
+	public String getZona() {
+		return zona;
+	}
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
 	
 	@Override
 	public String toString() {
@@ -33,9 +47,12 @@ public class Babbo {
 		builder.append(nome);
 		builder.append(", password=");
 		builder.append(password);
+		builder.append(", mezzoTrasporto=");
+		builder.append(mezzoTrasporto);
+		builder.append(", zona=");
+		builder.append(zona);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }

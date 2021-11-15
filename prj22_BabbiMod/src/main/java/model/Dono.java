@@ -3,6 +3,7 @@ package model;
 public class Dono {
 	private int id;
 	private String desc;
+	private int disponibilita;
 	
 	public int getId() {
 		return id;
@@ -17,6 +18,13 @@ public class Dono {
 		this.desc = desc;
 	}
 	
+	public int getDisponibilita() {
+		return disponibilita;
+	}
+	public void setDisponibilita(int disponibilita) {
+		this.disponibilita = disponibilita;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -24,8 +32,10 @@ public class Dono {
 		builder.append(id);
 		builder.append(", desc=");
 		builder.append(desc);
+		builder.append(", disponibilita=");
+		builder.append(disponibilita);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }

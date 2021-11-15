@@ -22,6 +22,7 @@ public class DonoDAOImpl implements DonoDAO {
 		this.connection = this.db.getConnection();
 		this.ps = this.connection.prepareStatement(INSERT);
 		this.ps.setString(1, dono.getDesc());
+		this.ps.setInt(2, dono.getDisponibilita());
 		this.ps.execute();
 	}
 
@@ -30,7 +31,8 @@ public class DonoDAOImpl implements DonoDAO {
 		this.connection = this.db.getConnection();
 		this.ps = this.connection.prepareStatement(UPDATE);
 		this.ps.setString(1, dono.getDesc());
-		this.ps.setInt(2, dono.getId());
+		this.ps.setInt(2, dono.getDisponibilita());
+		this.ps.setInt(3, dono.getId());
 		this.ps.execute();
 	}
 
@@ -53,6 +55,7 @@ public class DonoDAOImpl implements DonoDAO {
 		Dono dono = new Dono();
 		dono.setId(this.rs.getInt("id"));
 		dono.setDesc(this.rs.getString("descrizione"));
+		dono.setDisponibilita(this.rs.getInt("disponibilita"));
 		return dono;
 	}
 
@@ -68,7 +71,8 @@ public class DonoDAOImpl implements DonoDAO {
 			Dono dono = new Dono();
 			dono.setId(this.rs.getInt("id"));
 			dono.setDesc(this.rs.getString("descrizione"));
-			
+			dono.setDisponibilita(this.rs.getInt("disponibilita"));
+
 			doni.add(dono);
 		}
 		

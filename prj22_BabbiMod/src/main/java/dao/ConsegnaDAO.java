@@ -3,15 +3,14 @@ package dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.Babbo;
 import model.Consegna;
 
 public interface ConsegnaDAO {
 	
 	String FIND_ALL = "select * from consegne";
 	String FIND_ONE = "select * from consegne where id = ?";
-	String INSERT = "insert into consegne(id_babbo, id_dono, bambino) values(?,?,?)";
-	String UPDATE = "update consegne set id_babbo = ? , id_dono = ?, bambino = ? where id = ?";
+	String INSERT = "insert into consegne(id_dono, id_bambino) values(?,?)";
+	String UPDATE = "update consegne set id_dono = ?, id_bambino = ? where id = ?";
 	String DELETE = "delete from consegne where id = ?";
 	
 	void addConsegna(Consegna consegna) throws SQLException;
