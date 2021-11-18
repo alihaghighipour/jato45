@@ -8,14 +8,14 @@ import model.Sacco;
 public interface SaccoDAO {
 	
 	String FIND_ALL = "select * from sacchi";
-	String FIND_ONE = "select * from sacchi where nome = ?";
-	String INSERT = "insert into sacchi(nome, id_babbo, id_consegna) values(?,?,?)";
-	String UPDATE = "update sacchi set nome = ? , id_babbo = ?, id_consegna = ?  where nome = ?";
-	String DELETE = "delete from sacchi where nome = ?";
+	String FIND_ONE = "select * from sacchi where id = ?";
+	String INSERT = "insert into sacchi(id_babbo) values(?)";
+	String UPDATE = "update sacchi set id_babbo = ? where id = ?";
+	String DELETE = "delete from sacchi where id = ?";
 	
 	void addSacco(Sacco sacco) throws SQLException;
 	void updateSacco(Sacco sacco) throws SQLException;
-	void deleteSacco(String nome) throws SQLException;
-	Sacco getSacco(String nome) throws SQLException;
+	void deleteSacco(int id) throws SQLException;
+	Sacco getSacco(int id) throws SQLException;
 	ArrayList<Sacco> getSacchi() throws SQLException;
 }

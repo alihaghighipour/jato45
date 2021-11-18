@@ -1,10 +1,15 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Consegna {
 	
 	private int id;
 	private Dono dono;
 	private Bambino bambino;
+	private Sacco sacco;
+	private LocalDateTime dataAssegnazione;
+	private LocalDateTime dataConsegna;
 	
 	public int getId() {
 		return id;
@@ -30,6 +35,30 @@ public class Consegna {
 		this.bambino = bambino;
 	}
 
+	public Sacco getSacco() {
+		return sacco;
+	}
+
+	public void setSacco(Sacco sacco) {
+		this.sacco = sacco;
+	}
+
+	public LocalDateTime getDataAssegnazione() {
+		return dataAssegnazione;
+	}
+
+	public void setDataAssegnazione(LocalDateTime dataAssegnazione) {
+		this.dataAssegnazione = dataAssegnazione;
+	}
+
+	public LocalDateTime getDataConsegna() {
+		return dataConsegna;
+	}
+
+	public void setDataConsegna(LocalDateTime dataConsegna) {
+		this.dataConsegna = dataConsegna;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -39,8 +68,14 @@ public class Consegna {
 		builder.append(dono.getDesc());
 		builder.append(", bambino=");
 		builder.append(bambino.getNome());
+		builder.append(", sacco=");
+		builder.append(sacco.getId());
+		builder.append(", dataAssegnazione=");
+		builder.append(dataAssegnazione);
+		builder.append(", dataConsegna=");
+		builder.append(dataConsegna);
 		builder.append("]");
 		return builder.toString();
-	}	
+	}
 	
 }

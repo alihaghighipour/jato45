@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import database.DB;
 import model.Bambino;
 import model.Consegna;
 import model.Dono;
+import model.Sacco;
 
 public class ConsegnaDAOImpl implements ConsegnaDAO {
 
@@ -19,6 +23,7 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 	 */
 	DonoDAO donoDAO = new DonoDAOImpl();
 	BambinoDAO bambinoDAO = new BambinoDAOImpl();
+	SaccoDAO saccoDAO = new SaccoDAOImpl();
 	
 	Connection connection;
 	PreparedStatement ps;
@@ -31,6 +36,13 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 		this.ps = this.connection.prepareStatement(INSERT);
 		this.ps.setInt(1, consegna.getDono().getId());
 		this.ps.setInt(2, consegna.getBambino().getId());
+		this.ps.setInt(3, consegna.getSacco().getId());
+	
+	    Timestamp timestampAssegnazione = Timestamp.valueOf(consegna.getDataAssegnazione());
+		this.ps.setString(4, timestampAssegnazione.toString());
+		
+		Timestamp timestampConsegna = Timestamp.valueOf(consegna.getDataConsegna());
+		this.ps.setString(5, timestampConsegna.toString());
 		this.ps.execute();
 	}
 
@@ -40,7 +52,15 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 		this.ps = this.connection.prepareStatement(UPDATE);
 		this.ps.setInt(1, consegna.getDono().getId());
 		this.ps.setInt(2, consegna.getBambino().getId());
-		this.ps.setInt(3, consegna.getId());
+		this.ps.setInt(3, consegna.getSacco().getId());
+		
+	    Timestamp timestampAssegnazione = Timestamp.valueOf(consegna.getDataAssegnazione());
+		this.ps.setString(4, timestampAssegnazione.toString());
+		
+		Timestamp timestampConsegna = Timestamp.valueOf(consegna.getDataConsegna());
+		this.ps.setString(5, timestampConsegna.toString());
+		
+		this.ps.setInt(6, consegna.getId());
 		this.ps.execute();
 	}
 
@@ -65,17 +85,29 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 		
 		int idDonoTmp = this.rs.getInt("id_dono");
 		int idBambinoTmp = this.rs.getInt("id_bambino");
-
+		int idSaccoTmp = this.rs.getInt("id_sacco");
+		
 		Dono dono = new Dono();
 		Bambino bambino = new Bambino();
+		Sacco sacco = new Sacco();
 		
 		dono = donoDAO.getDono(idDonoTmp);
 		bambino = bambinoDAO.getBambino(idBambinoTmp);
+		sacco = saccoDAO.getSacco(idSaccoTmp);
 		
 		consegna.setDono(dono);
 		consegna.setBambino(bambino);
+		consegna.setSacco(sacco);
 		
+		String dataAssegnazione = this.rs.getString("data_assegnazione"); 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime localDateTimeAssegnazione = LocalDateTime.parse(dataAssegnazione, formatter);
 		
+		String dataConsegna = this.rs.getString("data_consegna"); 
+		LocalDateTime localDateTimeConsegna = LocalDateTime.parse(dataConsegna, formatter);
+		
+		consegna.setDataAssegnazione(localDateTimeAssegnazione);
+		consegna.setDataConsegna(localDateTimeConsegna);
 		return consegna;
 	}
 
@@ -93,20 +125,34 @@ public class ConsegnaDAOImpl implements ConsegnaDAO {
 			
 			int idDonoTmp = this.rs.getInt("id_dono");
 			int idBambinoTmp = this.rs.getInt("id_bambino");
-
+			int idSaccoTmp = this.rs.getInt("id_sacco");
+			
 			Dono dono = new Dono();
 			Bambino bambino = new Bambino();
+			Sacco sacco = new Sacco();
 			
 			dono = donoDAO.getDono(idDonoTmp);
 			bambino = bambinoDAO.getBambino(idBambinoTmp);
+			sacco = saccoDAO.getSacco(idSaccoTmp);
 			
 			consegna.setDono(dono);
 			consegna.setBambino(bambino);
+			consegna.setSacco(sacco);
+			
+			String dataAssegnazione = this.rs.getString("data_assegnazione"); 
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime localDateTimeAssegnazione = LocalDateTime.parse(dataAssegnazione, formatter);
+			
+			String dataConsegna = this.rs.getString("data_consegna"); 
+			LocalDateTime localDateTimeConsegna = LocalDateTime.parse(dataConsegna, formatter);
+			
+			consegna.setDataAssegnazione(localDateTimeAssegnazione);
+			consegna.setDataConsegna(localDateTimeConsegna);
 			
 			consegne.add(consegna);
 		}
 		
 		return consegne;
 	}
-
+	
 }

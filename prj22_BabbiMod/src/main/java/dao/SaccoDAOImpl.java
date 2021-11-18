@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import database.DB;
+import model.Babbo;
+import model.Dono;
 import model.Sacco;
 
 public class SaccoDAOImpl implements SaccoDAO {
 	
 	DB db = new DB();
+	BabboDAO babboDAO = new BabboDAOImpl();
 	Connection connection;
 	PreparedStatement ps;
 	ResultSet rs;
@@ -20,41 +23,66 @@ public class SaccoDAOImpl implements SaccoDAO {
 	public void addSacco(Sacco sacco) throws SQLException {
 		this.connection = this.db.getConnection();
 		this.ps = this.connection.prepareStatement(INSERT);
-		this.ps.setString(1, sacco.getNome());
-		this.ps.setInt(2, sacco.getBabbo().getId());
-		
-		for(int i = 0; i < sacco.getConsegne().size(); i++) {
-			
-			this.ps.setInt(3, sacco.getConsegne().get(i).getId());
-			this.ps.execute();
-		}
+		this.ps.setInt(1, sacco.getBabbo().getId());
+		this.ps.execute();
 	}
 
 	@Override
 	public void updateSacco(Sacco sacco) throws SQLException {
 		this.connection = this.db.getConnection();
 		this.ps = this.connection.prepareStatement(UPDATE);
-		this.ps.setString(1, sacco.getNome());
-		this.ps.setInt(2, sacco.getBabbo().getId());
-		this.ps.setString(4, sacco.getNome());
+		this.ps.setInt(1, sacco.getBabbo().getId());
+		this.ps.setInt(2, sacco.getId());
+		this.ps.execute();
 	}
 
 	@Override
-	public void deleteSacco(String nome) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void deleteSacco(int id) throws SQLException {
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(DELETE);
+		this.ps.setInt(1, id);
+		this.ps.execute();
 	}
 
 	@Override
-	public Sacco getSacco(String nome) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public Sacco getSacco(int id) throws SQLException {
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(FIND_ONE);
+		this.ps.setInt(1, id);
+		this.rs = this.ps.executeQuery();
+		
+		this.rs.next();
+		Sacco sacco = new Sacco();
+		sacco.setId(this.rs.getInt("id"));
+		
+		Babbo babbo = new Babbo();
+		babbo = babboDAO.getBabbo(this.rs.getInt("id_babbo"));
+		sacco.setBabbo(babbo);
+		
+		return sacco;
 	}
 
 	@Override
 	public ArrayList<Sacco> getSacchi() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<Sacco> sacchi = new ArrayList<Sacco>();
+		this.connection = this.db.getConnection();
+		this.ps = this.connection.prepareStatement(FIND_ALL);
+		this.rs = this.ps.executeQuery();
+		
+		while(this.rs.next()) {
+			Sacco sacco = new Sacco();
+			sacco.setId(this.rs.getInt("id"));
+			
+			Babbo babbo = new Babbo();
+			babbo = babboDAO.getBabbo(this.rs.getInt("id_babbo"));
+			sacco.setBabbo(babbo);
+			
+			sacchi.add(sacco);
+		}
+		
+		return sacchi;
 	}
+
 
 }

@@ -1,22 +1,15 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Sacco {
-	private String nome;
+	private int id;
 	private Babbo babbo;
-	private ArrayList<Consegna> consegne;
-	
-	public Sacco() {
-		consegne = new ArrayList<Consegna>();
-	}
-	
-	public String getNome() {
-		return nome;
+
+	public int getId() {
+		return id;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Babbo getBabbo() {
@@ -25,18 +18,5 @@ public class Sacco {
 	
 	public void setBabbo(Babbo babbo) {
 		this.babbo = babbo;
-	}
-	
-	public ArrayList<Consegna> getConsegne() {
-		return consegne;
-	}
-	
-	public void setConsegne(ArrayList<Consegna> consegne) {
-		this.consegne = consegne;
-	}
-
-	public void addConsegna(Consegna consegna) {
-		this.consegne.add(consegna);
-	}
-	
+	}	
 }

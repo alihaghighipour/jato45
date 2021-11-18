@@ -51,6 +51,9 @@ public class InitDB {
 				+ "id INT AUTO_INCREMENT,"
 				+ "id_dono INT,"
 				+ "id_bambino INT,"
+				+ "id_sacco INT,"
+				+ "data_assegnazione TIMESTAMP,"
+				+ "data_consegna TIMESTAMP,"
 				+ "PRIMARY KEY(id) )";
 		
 		connessione = db.getConnection();
@@ -80,10 +83,9 @@ public class InitDB {
 	
 	public static void creaTabellaSacchi() {
 		String query = "create table if not exists sacchi("
-				+ "nome varchar(20),"
+				+ "id INT AUTO_INCREMENT,"
 				+ "id_babbo INT,"
-				+ "id_consegna INT,"
-				+ "PRIMARY KEY(nome,id_babbo,id_consegna) )";
+				+ "PRIMARY KEY(id) )";
 		
 		connessione = db.getConnection();
 		try {
