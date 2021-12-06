@@ -1,0 +1,8 @@
+.sidebar .list-group {
+    border-radius: 0;
+}
+
+.card {
+    width: 100%;
+    max-width: 25rem;
+}
